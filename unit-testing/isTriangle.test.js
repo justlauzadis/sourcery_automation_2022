@@ -27,3 +27,7 @@ test('3.2, 4.2, 5.2 is triangle', () => {
 test('a, b, c is not triangle', () => {
     expect(isTriangle('a', 'b', 'c')).toBe(false);
 });
+
+test('a, b, d is not triangle', () => {
+    expect(isTriangle('a', 'b', 'd')).toBe(false);
+});
