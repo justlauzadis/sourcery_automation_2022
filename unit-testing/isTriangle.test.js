@@ -5,5 +5,5 @@ test('3, 4, 5 is triangle', () => {
 });
 
 test('3, 4, 5 is triangle', () => {
-    expect(isTriangle(3, 4, 5)).toBe(false);
+    expect(isTriangle(3, 4, 5)).toBe(true);
 });
