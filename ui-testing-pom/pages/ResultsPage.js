@@ -6,7 +6,7 @@ exports.ResultsPage = class ResultsPage {
     }
 
     async getResults() {
-        return await this.page.locator('div[data-testid=result]');
+        return await this.page.locator('article[data-testid=result]');
     }
 
     async assertNthResultFirstLinkContains(index, text) {
