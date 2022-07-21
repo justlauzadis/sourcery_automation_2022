@@ -1,3 +1,4 @@
+const isRightTriangle = require('./isRightTriangle');
 const isTriangle = require('./isTriangle');
 
 test('3, 4, 5 is triangle', () => {
@@ -20,4 +21,17 @@ test('a, b, c is triangle', () => {
 });
 test('1, 1, 3 is triangle', () => {
     expect(isTriangle(1,1,3)).toBe(false);
+});
+test('a,b,c is not a triangle',() =>{
+    //arrange
+    let a = 'a';
+    let b = 'b';
+    let c = 'c';
+    let expected = false;
+    
+    //act
+    let result = isRightTriangle(a,b,c);
+
+    //assert
+    expect(result),toBe(expected);
 });
