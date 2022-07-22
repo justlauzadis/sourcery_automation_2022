@@ -14,18 +14,166 @@ const data = [
   '9'
 ]
 
-
 data.forEach(version => {
-  test.describe(version + ': Add', () => {
-    test('Concatenating 2 and 3 results in 23', async ({ page }) => {
+
+    // Calculate button visibility
+  test.describe(version + ': Calculate button', () => {
+    test('Calculate button should always be enabled', async ({ page }) => {
       await page.goto('https://testsheepnz.github.io/BasicCalculator');
       await page.selectOption('#selectBuild', { label: version});
-      await page.locator('#number1Field').type('2');
-      await page.locator('#number2Field').type('3');
+      await expect(page.locator('#calculateButton'), 'Should be enabled').toBeEnabled();
+    });
+  });
+
+  // Clear button functionality
+  test.describe(version + ': Clear button', () => {
+    test('Pressing Clear button should clear the answer field', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('5');
+      await page.locator('#number2Field').type('2');
+      await page.selectOption('#selectOperationDropdown', {label: 'Add'});
+      await page.locator('#calculateButton').click();
+      await page.locator('#clearButton').click();
+
+      await expect(page.locator('#numberAnswerField'), 'Answer field should be cleared').toBeEmpty();
+    });
+
+    // Clear button visibility
+    test('Clear button should always be enabled', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await expect(page.locator('#clearButton'), 'Clear button is disabled').toBeEnabled();
+    });
+  });
+
+  // Integer checkbox
+  test.describe(version + ': Integers Only checkbox and description', () => {
+    // Choosing Concatinate option should make Integers Only checkbox and description disappear 
+      test('Choosing Concatenate operation should hide Integers Only checkbox and description', async ({ page }) => {
+        await page.goto('https://testsheepnz.github.io/BasicCalculator');
+        await page.selectOption('#selectBuild', { label: version});
+        await page.selectOption('#selectOperationDropdown', {label: 'Concatenate'});
+        await expect(page.locator(('label[id=intSelectionLabel]') && ('input[id=integerSelect]') ), 'Integers checkbox is still enabled').toBeHidden();
+      });
+
+      // Integer Only checkbox should be enabled to all options except Concatenate
+      test('Integers Only field should be enabled except for Concatenate operation', async ({ page }) => {
+        await page.goto('https://testsheepnz.github.io/BasicCalculator');
+        await page.selectOption('#selectBuild', { label: version});
+        await page.selectOption('#selectOperationDropdown', {label: 'Add'});
+        await expect(page.locator(('label[id=intSelectionLabel]') && ('input[id=integerSelect]') ), 'Integers Only checkbox and description is disabled').toBeEnabled();
+      });
+    });
+
+  // Error message appearance when adding a string to an integer or a float
+  test.describe(version + ': Error message', () => {
+    test('Adding not an integer or a float should display an error message except for Concatanate opreation', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('a');
+      await page.locator('#number2Field').type('4.2');
+      await page.selectOption('#selectOperationDropdown', {label: 'Add'});
+      await page.locator('#calculateButton').click();
+
+      await expect(page.locator('label[id=errorMsgField]'), 'No error message displayed.').not.toBeEmpty();
+    });
+  });
+
+  // Concatenate functionality
+  test.describe(version + ': Concatenate', () => {
+    // Concatenating strings
+    test('Concatenating a and b should result in ab', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('a');
+      await page.locator('#number2Field').type('b');
+      await page.selectOption('#selectOperationDropdown', {label: 'Concatenate'});
+      await page.locator('#calculateButton').click();
+  
+      await expect(page.locator('#numberAnswerField'), 'Incorrect answer. It should be "ab"').toHaveValue('ab');
+    });
+
+    // Concatenating integers
+    test('Concatenating 3 and 4 should result in 34', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('3');
+      await page.locator('#number2Field').type('4');
+      await page.selectOption('#selectOperationDropdown', {label: 'Concatenate'});
+      await page.locator('#calculateButton').click();
+  
+      await expect(page.locator('#numberAnswerField'), 'Incorrect answer. It should be "34"').toHaveValue('34');
+    });
+  });
+
+  // Add functionality
+  test.describe(version + ': Add', () => {
+    // Adding integers
+    test('Adding 3 and 4 should result in 7', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('3');
+      await page.locator('#number2Field').type('4');
       await page.selectOption('#selectOperationDropdown', {label: 'Add'});
       await page.locator('#calculateButton').click();
   
-      await expect(page.locator('#numberAnswerField')).toHaveValue('5');
+      await expect(page.locator('#numberAnswerField'), 'The answer is incorrect. It should be 7').toHaveValue('7');
+    });
+  });
+
+  // Subtract functionality
+  test.describe(version + ': Subtract', () => {
+    test('Subtracting 5 and 2 should result in 3', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('5');
+      await page.locator('#number2Field').type('2');
+      await page.selectOption('#selectOperationDropdown', {label: 'Subtract'});
+      await page.locator('#calculateButton').click();
+  
+      await expect(page.locator('#numberAnswerField'), 'The answer is incorrect. It should be 3').toHaveValue('3');
+    });
+  });
+
+  // Multiply functionality
+  test.describe(version + ': Multiply', () => {
+    test('Multiplying 5 and 2 should result in 10', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('5');
+      await page.locator('#number2Field').type('2');
+      await page.selectOption('#selectOperationDropdown', {label: 'Multiply'});
+      await page.locator('#calculateButton').click();
+  
+      await expect(page.locator('#numberAnswerField'), 'The answer is incorrect. It should be 10').toHaveValue('10');
+    });
+  });
+
+  // Division functionality
+  test.describe(version + ': Divide', () => {
+    // Basic division
+    test('Dividing 5 and 2 should result in 2.5', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('5');
+      await page.locator('#number2Field').type('2');
+      await page.selectOption('#selectOperationDropdown', {label: 'Divide'});
+      await page.locator('#calculateButton').click();
+  
+      await expect(page.locator('#numberAnswerField'), 'The answer is incorrect. It should be 2.5').toHaveValue('2.5');
+    });
+
+    // Division by zero
+    test('Division by zero should not be allowed and should display an error message', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('5');
+      await page.locator('#number2Field').type('0');
+      await page.selectOption('#selectOperationDropdown', {label: 'Divide'});
+      await page.locator('#calculateButton').click();
+
+      await expect(page.locator('label[id=errorMsgField]'), 'Division should not be allowed. Error message should be displayed').not.toBeEmpty();
     });
   });
 });
