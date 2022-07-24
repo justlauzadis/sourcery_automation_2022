@@ -1,4 +1,5 @@
 const { test, expect } = require('@playwright/test');
+const { SearchPage } = require('../pages/SearchPage');
 
 const data = [
   'Prototype',
@@ -16,26 +17,59 @@ const data = [
 
 data.forEach(version => {
   test.describe(version + ': Add', () => {
-    test('Add 2 and 3 results in 5', async ({ page }) => {
-      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+    test('Function add, 4 + 3 result should be 7', async ({ page }) => {
+      let searchPage = new SearchPage(page);
+      await searchPage.navigate();
       await page.selectOption('#selectBuild', { label: version});
-      await page.locator('#number1Field').type('2');
-      await page.locator('#number2Field').type('3');
-      await page.selectOption('#selectOperationDropdown', {label: 'Add'});
+      await searchPage.search('4', '3');
+      await searchPage.selectOption('Add');
       await page.locator('#calculateButton').click();
   
-      await expect(page.locator('#numberAnswerField')).toHaveValue('5');
+      await expect(page.locator('#numberAnswerField')).toHaveValue('7');
     });
 
-    test('Subtract 2 and 3 results in -1', async ({ page }) => {
-      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+    test('Function subtract, 4 - 3 = result should be 1', async ({ page }) => {
+      let searchPage = new SearchPage(page);
+      await searchPage.navigate();
       await page.selectOption('#selectBuild', { label: version});
-      await page.locator('#number1Field').type('2');
-      await page.locator('#number2Field').type('3');
-      await page.selectOption('#selectOperationDropdown', {label: 'Subtract'});
+      await searchPage.search('4', '3'); // field1 and field2 value
+      await searchPage.selectOption('Subtract'); // operation field
       await page.locator('#calculateButton').click();
   
-      await expect(page.locator('#numberAnswerField')).toHaveValue('-1');
+      await expect(page.locator('#numberAnswerField')).toHaveValue('1');
+    });
+    
+    test('Function multiply, 5 * 2 = result should be 10', async ({ page }) => {
+      let searchPage = new SearchPage(page);
+      await searchPage.navigate();
+      await page.selectOption('#selectBuild', { label: version});
+      await searchPage.search('5', '2'); // field1 and field2 value
+      await searchPage.selectOption('Multiply'); // operation field
+      await page.locator('#calculateButton').click();
+  
+      await expect(page.locator('#numberAnswerField')).toHaveValue('10');
+    });
+
+    test('Function divide, 6/2 = result should be 3', async ({ page }) => {
+      let searchPage = new SearchPage(page);
+      await searchPage.navigate();
+      await page.selectOption('#selectBuild', { label: version});
+      await searchPage.search('6', '2'); // field1 and field2 value
+      await searchPage.selectOption('Divide'); // operation field
+      await page.locator('#calculateButton').click();
+  
+      await expect(page.locator('#numberAnswerField')).toHaveValue('3');
+    });
+
+    test('Function concatenate, 1 and 1 = result should be 11', async ({ page }) => {
+      let searchPage = new SearchPage(page);
+      await searchPage.navigate();
+      await page.selectOption('#selectBuild', { label: version});
+      await searchPage.search('1', '1'); // field1 and field2 value
+      await searchPage.selectOption('Concatenate'); // operation field
+      await page.locator('#calculateButton').click();
+  
+      await expect(page.locator('#numberAnswerField')).toHaveValue('11');
     });
   });
 });
