@@ -1,4 +1,3 @@
-// @ts-check
 const { test, expect } = require('@playwright/test');
 
 const data = [
@@ -17,7 +16,7 @@ const data = [
 
 data.forEach(version => {
   test.describe(version + ': Add', () => {
-    test('Concatenating 2 and 3 results in 23', async ({ page }) => {
+    test('Add 2 and 3 results in 5', async ({ page }) => {
       await page.goto('https://testsheepnz.github.io/BasicCalculator');
       await page.selectOption('#selectBuild', { label: version});
       await page.locator('#number1Field').type('2');
@@ -26,6 +25,17 @@ data.forEach(version => {
       await page.locator('#calculateButton').click();
   
       await expect(page.locator('#numberAnswerField')).toHaveValue('5');
+    });
+
+    test('Subtract 2 and 3 results in -1', async ({ page }) => {
+      await page.goto('https://testsheepnz.github.io/BasicCalculator');
+      await page.selectOption('#selectBuild', { label: version});
+      await page.locator('#number1Field').type('2');
+      await page.locator('#number2Field').type('3');
+      await page.selectOption('#selectOperationDropdown', {label: 'Subtract'});
+      await page.locator('#calculateButton').click();
+  
+      await expect(page.locator('#numberAnswerField')).toHaveValue('-1');
     });
   });
 });
