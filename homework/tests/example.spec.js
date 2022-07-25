@@ -27,7 +27,7 @@ data.forEach(version => {
       await calculatorInput.firstNum('2');
       await calculatorInput.secondNum('3');
       await calculatorInput.selectFunc('Add');
-      await page.locator('#calculateButton').click();
+      await calculatorInput.calculate();
       
       await expect(page.locator('#numberAnswerField'), 'Fails to add 2 and 3').toHaveValue('5');
     });
@@ -42,7 +42,7 @@ data.forEach(version => {
       await calculatorInput.firstNum('2');
       await calculatorInput.secondNum('3');
       await calculatorInput.selectFunc('Concatenate');
-      await page.locator('#calculateButton').click();
+      await calculatorInput.calculate();
   
       await expect(page.locator('#numberAnswerField')).toHaveValue('23');
     });
@@ -57,7 +57,7 @@ data.forEach(version => {
       await calculatorInput.firstNum('2');
       await calculatorInput.secondNum('3');
       await calculatorInput.selectFunc('Subtract');
-      await page.locator('#calculateButton').click();
+      await calculatorInput.calculate();
   
       await expect(page.locator('#numberAnswerField')).toHaveValue('-1');
     });
@@ -72,7 +72,7 @@ data.forEach(version => {
       await calculatorInput.firstNum('2');
       await calculatorInput.secondNum('3');
       await calculatorInput.selectFunc('Multiply');
-      await page.locator('#calculateButton').click();
+      await calculatorInput.calculate();
   
       await expect(page.locator('#numberAnswerField')).toHaveValue('6');
     });
@@ -87,7 +87,7 @@ data.forEach(version => {
       await calculatorInput.firstNum('2');
       await calculatorInput.secondNum('3');
       await calculatorInput.selectFunc('Divide');
-      await page.locator('#calculateButton').click();
+      await calculatorInput.calculate();
   
       await expect(page.locator('#numberAnswerField')).toHaveValue('0.6666666666666666');
     });
@@ -102,7 +102,7 @@ data.forEach(version => {
       await calculatorInput.firstNum('2');
       await calculatorInput.secondNum('0');
       await calculatorInput.selectFunc('Divide');
-      await page.locator('#calculateButton').click();
+      await calculatorInput.calculate();
       
       await expect(page.locator('#errorMsgField')).toHaveText('Divide by zero error!');     
     });    
@@ -155,8 +155,8 @@ data.forEach(version => {
       await calculatorInput.firstNum('7');
       await calculatorInput.secondNum('3');
       await calculatorInput.selectFunc('Divide');
-      await page.locator('#integerSelect').check();
-      await page.locator('#calculateButton').click();
+      await calculatorInput.intSelect();
+      await calculatorInput.calculate();
   
       await expect(page.locator('#numberAnswerField'), ).toHaveValue('2');
     });
@@ -171,7 +171,7 @@ data.forEach(version => {
         await calculatorInput.firstNum('B');
         await calculatorInput.secondNum('3');
         await calculatorInput.selectFunc('Add');
-        await page.locator('#calculateButton').click();
+        await calculatorInput.calculate();
     
         await expect(page.locator('#errorMsgField'), 'Number 1 is not a number').toHaveText('Number 1 is not a number'); 
       });
@@ -186,7 +186,7 @@ data.forEach(version => {
         await calculatorInput.firstNum('3');
         await calculatorInput.secondNum('B');
         await calculatorInput.selectFunc('Add');
-        await page.locator('#calculateButton').click();
+        await calculatorInput.calculate();
     
         await expect(page.locator('#errorMsgField'), 'Number 2 is not a number').toHaveText('Number 2 is not a number'); 
       });

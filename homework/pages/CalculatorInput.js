@@ -14,6 +14,14 @@ class CalculatorInput {
     async selectFunc(func) {
         await this.page.selectOption('#selectOperationDropdown', {label: func});
     }
+
+    async calculate() {
+        await this.page.locator('#calculateButton').click();
+    }
+
+    async intSelect() {
+        await this.page.locator('#integerSelect').check();
+    }
 }
 
 module.exports = { CalculatorInput };
