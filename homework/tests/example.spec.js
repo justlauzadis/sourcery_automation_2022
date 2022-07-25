@@ -29,7 +29,7 @@ data.forEach(version => {
       await calculatorInput.selectFunc('Add');
       await calculatorInput.calculate();
       
-      await expect(page.locator('#numberAnswerField'), 'Fails to add 2 and 3').toHaveValue('5');
+      await expect(page.locator('#numberAnswerField'), 'Adding 2 and 3').toHaveValue('5');
     });
   });
 
@@ -44,7 +44,7 @@ data.forEach(version => {
       await calculatorInput.selectFunc('Concatenate');
       await calculatorInput.calculate();
   
-      await expect(page.locator('#numberAnswerField')).toHaveValue('23');
+      await expect(page.locator('#numberAnswerField'), 'Concatenating 2 and 3').toHaveValue('23');
     });
   });
 
@@ -59,7 +59,7 @@ data.forEach(version => {
       await calculatorInput.selectFunc('Subtract');
       await calculatorInput.calculate();
   
-      await expect(page.locator('#numberAnswerField')).toHaveValue('-1');
+      await expect(page.locator('#numberAnswerField'), 'Subtracting 2 and 3').toHaveValue('-1');
     });
   });
 
@@ -74,7 +74,7 @@ data.forEach(version => {
       await calculatorInput.selectFunc('Multiply');
       await calculatorInput.calculate();
   
-      await expect(page.locator('#numberAnswerField')).toHaveValue('6');
+      await expect(page.locator('#numberAnswerField'), 'Mutiplying 2 and 3').toHaveValue('6');
     });
   });
 
@@ -89,7 +89,7 @@ data.forEach(version => {
       await calculatorInput.selectFunc('Divide');
       await calculatorInput.calculate();
   
-      await expect(page.locator('#numberAnswerField')).toHaveValue('0.6666666666666666');
+      await expect(page.locator('#numberAnswerField'), 'Dividing 2 and 3').toHaveValue('0.6666666666666666');
     });
   });
 
@@ -104,7 +104,7 @@ data.forEach(version => {
       await calculatorInput.selectFunc('Divide');
       await calculatorInput.calculate();
       
-      await expect(page.locator('#errorMsgField')).toHaveText('Divide by zero error!');     
+      await expect(page.locator('#errorMsgField'), 'Dividing by 0').toHaveText('Divide by zero error!');     
     });    
   });
 
@@ -113,8 +113,8 @@ data.forEach(version => {
       let selectVersion = new SelectVersion(page);
       await selectVersion.navigate();
       await selectVersion.selectBuild(version);
-      await expect(page.locator('#number1Field'), 'number1 input field is not visible').toBeVisible();
-      await expect(page.locator('#number2Field'), 'number2 input field is not visible').toBeVisible();     
+      await expect(page.locator('#number1Field'), 'number1 input field visibility').toBeVisible();
+      await expect(page.locator('#number2Field'), 'number2 input field visibility').toBeVisible();     
     });
   });
 
@@ -133,7 +133,7 @@ data.forEach(version => {
       let selectVersion = new SelectVersion(page);
       await selectVersion.navigate();
       await selectVersion.selectBuild(version);
-      await expect(page.locator('#calculateButton'), 'Calculate button is not visible').toBeVisible();
+      await expect(page.locator('#calculateButton'), 'Calculate button visibility').toBeVisible();
     });
   });
 
@@ -158,7 +158,7 @@ data.forEach(version => {
       await calculatorInput.intSelect();
       await calculatorInput.calculate();
   
-      await expect(page.locator('#numberAnswerField'), ).toHaveValue('2');
+      await expect(page.locator('#numberAnswerField'), 'Not integers answer').toHaveValue('2');
     });
   });
 
@@ -173,7 +173,7 @@ data.forEach(version => {
         await calculatorInput.selectFunc('Add');
         await calculatorInput.calculate();
     
-        await expect(page.locator('#errorMsgField'), 'Number 1 is not a number').toHaveText('Number 1 is not a number'); 
+        await expect(page.locator('#errorMsgField'), 'Letters in number1 field').toHaveText('Number 1 is not a number'); 
       });
     });
 
@@ -188,7 +188,7 @@ data.forEach(version => {
         await calculatorInput.selectFunc('Add');
         await calculatorInput.calculate();
     
-        await expect(page.locator('#errorMsgField'), 'Number 2 is not a number').toHaveText('Number 2 is not a number'); 
+        await expect(page.locator('#errorMsgField'), 'Letters in number2 field').toHaveText('Number 2 is not a number'); 
       });
     });
     
