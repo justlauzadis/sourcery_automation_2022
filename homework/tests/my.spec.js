@@ -180,11 +180,11 @@ data.forEach(version => {
 
 data.forEach(version => {
   test.describe(version + ': Fill tabs', () => {
-    test(': Fields NR1 and NR2 should be enabled', async ({ page }) => {
+    test(': Fields  #2 should be enabled', async ({ page }) => {
       await page.goto('https://testsheepnz.github.io/BasicCalculator');
       await page.selectOption('#selectBuild', { label: version});
-
-      await expect(page.locator('#number2Field').toBeEmpty());
+      await page.locator('#number2Field').type('2');
+      await expect(page.locator('#number2Field')).toHaveValue('2');         //bandziau tobeEmpty toHaveValue isEnabled isVisible irtt.
       await page.pause();
     });
   });
