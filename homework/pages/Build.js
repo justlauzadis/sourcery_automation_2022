@@ -1,4 +1,4 @@
-class SelectVersion {
+class Build {
     constructor(page) {
         this.page = page;
     }
@@ -12,4 +12,4 @@ class SelectVersion {
     }
 }
 
-module.exports = { SelectVersion };
+module.exports = { Build };

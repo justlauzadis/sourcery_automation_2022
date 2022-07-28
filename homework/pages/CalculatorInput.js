@@ -3,11 +3,11 @@ class CalculatorInput {
         this.page = page;
     }
 
-    async firstNum(num) {
+    async typeFirstNum(num) {
         await this.page.locator('#number1Field').type(num);
     }
 
-    async secondNum(num) {
+    async typeSecondNum(num) {
         await this.page.locator('#number2Field').type(num);
     }
 
