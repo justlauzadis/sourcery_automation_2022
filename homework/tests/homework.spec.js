@@ -1,18 +1,7 @@
 // @ts-check
 const { test, expect } = require("@playwright/test");
 
-const data = [
-  "Prototype",
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9"
-];
+const data = ["Prototype", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://testsheepnz.github.io/BasicCalculator");
@@ -92,7 +81,6 @@ function basicFunctions(build, action, number1, number2, onlyIntegers, result) {
       ". Only integers: " +
       onlyIntegers,
     async ({ page }) => {
-      //await page.goto("https://testsheepnz.github.io/BasicCalculator");
       await page.selectOption("#selectBuild", { label: build });
       await page.locator("#number1Field").type(number1);
       await page.locator("#number2Field").type(number2);
@@ -124,7 +112,6 @@ function doubleCalculateButtonClick(build, action, number1, number2, result) {
       " Resul: " +
       result,
     async ({ page }) => {
-      //await page.goto("https://testsheepnz.github.io/BasicCalculator");
       await page.selectOption("#selectBuild", { label: build });
       await page.locator("#number1Field").type(number1);
       await page.locator("#number2Field").type(number2);
@@ -146,7 +133,6 @@ function doubleCalculateButtonClick(build, action, number1, number2, result) {
  */
 function clearButtonWorks(build, action, number1, number2, result) {
   test(build + ": Clear button works.", async ({ page }) => {
-    //await page.goto("https://testsheepnz.github.io/BasicCalculator");
     await page.selectOption("#selectBuild", { label: build });
     await page.locator("#number1Field").type(number1);
     await page.locator("#number2Field").type(number2);
@@ -178,7 +164,6 @@ function correctErrorMessage(build, action, number1, number2, result) {
       result +
       '"',
     async ({ page }) => {
-      //await page.goto("https://testsheepnz.github.io/BasicCalculator");
       await page.selectOption("#selectBuild", { label: build });
       await page.locator("#number1Field").type(number1);
       await page.locator("#number2Field").type(number2);
